@@ -1,0 +1,169 @@
+body {
+    box-sizing: border-box;
+    border: 0 solid #e5e7eb 
+}
+
+.profile-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.text-bg-dark {
+
+
+    @media screen and (max-width: 500px) {
+        min-width: 500px; /* Minimum width of 400px */
+        width: 100%; /* Automatically adjust width based on content */
+    }
+}
+
+/* Styles for the grid container */
+.grid-container {
+    /* display: grid; */
+    /* grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); Dynamic grid with min width of 300px */
+    gap: 20px; /* Gap between grid items */
+}
+
+.bloogs {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.sect-hidden {
+    width: 100%;
+    margin: 0 auto;
+    display: none !important;
+}
+
+/* Styles for individual blog items */
+.blog {
+    padding: 5px;
+}
+
+/* Apply layout pattern for every 6th blog post and beyond */
+.blog:nth-child(6n + 1) {
+    grid-column: span 3; /* Blog 1 takes the whole row */
+}
+
+.blog:nth-child(6n + 2),
+.blog:nth-child(6n + 3) {
+    grid-column: span 1; /* Blogs 2 and 3 take one-third of a row each */
+}
+
+/* Media query to adjust layout for smaller screens */
+@media screen and (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column width for smaller screens */
+    }
+}
+
+code[class*=language-],pre[class*=language-] {
+    color: #ccc;
+    background: 0 0;
+    font-family: Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;
+    font-size: 1em;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none
+}
+
+pre[class*=language-] {
+    padding: 1em;
+    margin: .5em 0;
+    overflow: auto
+}
+
+:not(pre)>code[class*=language-],pre[class*=language-] {
+    background: #2d2d2d
+}
+
+:not(pre)>code[class*=language-] {
+    padding: .1em;
+    border-radius: .3em;
+    white-space: normal
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    flex-direction: column-reverse;
+    margin: 0 auto;
+}
+
+
+
+@media screen and (min-width: 1200px) {
+    .wrapper {
+        width: 70%; /* Occupy 70% of the screen width on larger screens */
+    }
+    .sect {
+        width: 70%;
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .wrapper {
+        width: 80%; /* Occupy 80% of the screen width on medium screens */
+    }
+    .sect {
+        width: 80%;
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .wrapper {
+        width: 90%; /* Occupy 90% of the screen width on small screens */
+    }
+    .sect {
+        width: 90%;
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .wrapper {
+        width: 95%; /* Occupy 95% of the screen width on extra small screens */
+    }
+    .sect {
+        width: 95%;
+        margin: 0;
+    }
+}
+
+/* padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x); */
+
+@media screen and (max-width: 620px) {
+    .hide {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .wrapper {
+        min-width: 400px; /* Minimum width of 400px */
+        width: auto; /* Automatically adjust width based on content */
+    }
+    .head {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .sect-hidden {
+        min-width: 420px;
+        width: auto;
+    }
+}

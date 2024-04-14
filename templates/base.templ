@@ -1,0 +1,135 @@
+package templates
+
+import mo "github.com/EmilioCliff/portfolio.git/models"
+
+templ IndexPage(links []mo.Link, blogs []mo.Blog) {
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+	    <meta charset="UTF-8"></meta>
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+	    <title>Document</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"></link>
+		<link rel="stylesheet" href="static/css/style.css"></link>
+	</head>
+	<body>
+		@scrollNavbarComponent(links)
+		<header class="d-flex align-items-center flex-column p-2 text-bg-dark head" style="flex-wrap: wrap;">
+			@navbarComponent(links)
+			@introComponent()
+		</header>
+		<section id="triggerSection" class="wrapper">
+		for i, blog := range(blogs){
+    		if i % 6 == 0 {
+    		    <div class="row">
+    		        <div class="col">
+    		            @blogCardComponent(blog)
+    		        </div>
+    		    </div>
+    		}
+    		else if (i + 1) % 6 == 0 {
+    		    <div class="row">
+    		        <div class="col-md-4 p-1">
+    		            @blogCardComponent(blog)
+    		        </div>
+    		    </div>
+    		}
+    		else if (i + 2) % 6 == 0 || (i + 3) % 6 == 0 {
+    		    <div class="row">
+    		        <div class="col-md-6">
+    		            @blogCardComponent(blog)
+    		        </div>
+    		    </div>
+    		}
+    		else {
+    		    <div class="row">
+    		        <div class="col-md-4">
+    		            @blogCardComponent(blog)
+    		        </div>
+    		    </div>
+    		}
+		}	
+		</section>
+
+    	<script>
+    		document.addEventListener('DOMContentLoaded', function () {
+    		  const triggerSection = document.getElementById('triggerSection');
+    		  const scrollNavbar = document.querySelector('.sect-hidden');
+
+    		  function toggleNavbar() {
+    		    const rect = triggerSection.getBoundingClientRect();
+    		    if (rect.top < 0) { // Check if the section is above the viewport
+					scrollNavbar.style.setProperty('display', 'flex', 'important');
+    		    } else {
+					scrollNavbar.style.setProperty('display', 'none', 'important');
+    		    }
+    		  }
+
+    		  window.addEventListener('scroll', toggleNavbar);
+    		  toggleNavbar();
+    		});
+    	</script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+		<script src="https://unpkg.com/htmx.org@1.9.11" integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0" crossorigin="anonymous"></script>
+	</body>
+	</html>
+}
+
+templ navbarComponent(links []mo.Link) {
+      <div class="d-inline-flex align-items-center justify-content-between sect text-secondary">
+		<div class="d-inline-flex align-items-center justify-content-center">	
+        	<ul class="nav justify-content-center" style="flex-wrap: nowrap;">
+				for _, link := range links{
+					<li><a href={templ.URL(link.Path)} class="nav-link text-secondary">{ link.Title }</a></li>
+				}
+        	</ul>
+		</div>
+		<button class="btn rounded btn-sm btn-outline-light d-inline-flex justify-content-center align-items-center hide">
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+			  <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/>
+			</svg>
+			<span class="ps-1">Subscribe</span>
+		</button>
+      </div>
+}
+
+templ scrollNavbarComponent(links []mo.Link) {
+	// 	<header class="d-flex align-items-center flex-column p-2 text-bg-dark head" style="flex-wrap: wrap;">
+	<div class="d-flex align-items-center justify-content-center flex-column p-2 text-bg-dark head text-secondary fixed-top sect-hidden" style="flex-wrap: nowrap;">
+    //   <div class="d-inline-flex align-items-center justify-content-between text-secondary">
+		<div class="d-inline-flex align-items-center sect">	
+			<a href="/" class="nav-link hide" style="font-weight: bold; font-size: 1.2rem; color: white;">Emilio Cliff</a>
+        	<ul class="nav justify-content-center" style="flex-wrap: nowrap;">
+				for _, link := range links{
+					<li><a href={templ.URL(link.Path)} class="nav-link text-secondary">{ link.Title }</a></li>
+				}
+        	</ul>
+		</div>
+    //   </div>
+	</div>
+}
+
+templ introComponent() {
+      <div class="d-flex flex-wrap flex-column p-5 align-items-center justify-content-center justify-content-lg-start sect" style="flex-wrap: nowrap;">
+	  	<h1>Emilio Limo Cliff</h1>
+		<p style="text-align: center;">Musings, stories, ideas and technical articles</p>
+      </div>
+}
+
+templ blogCardComponent(blog mo.Blog) {
+    <div class={"blg " + blog.LayoutClass}>
+        <img src={blog.ImagePath} class="card-img-top mb-1" alt="..."></img>
+        <div class="d-flex flex-column p-2">
+            <h3 style="font-size: 1rem; color: blue; margin: 0;">{blog.Category}</h3>
+            <h2 style=" margin: 0;">{blog.Title}</h2>
+            <p style=" margin: 0;">{blog.Content}</p>
+            <div class="d-flex flew-row align-items-center m-2">
+                <img class="profile-photo" src="static/images/cliff.jpeg" alt="..."></img>
+                <div class="d-flex flex-column">
+                    <p style="font-weight: bold; margin: 0;">{blog.Author}</p>
+                    <p style="font-weight: light; margin: 0;">{blog.CreatedAt}  -  {blog.Duration.String()} MIN READ</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
